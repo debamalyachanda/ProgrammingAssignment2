@@ -1,56 +1,39 @@
-
-R version 3.6.3 (2020-02-29) -- "Holding the Windsock"
-Copyright (C) 2020 The R Foundation for Statistical Computing
-Platform: x86_64-w64-mingw32/x64 (64-bit)
-
-R is free software and comes with ABSOLUTELY NO WARRANTY.
-You are welcome to redistribute it under certain conditions.
-Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
-
-R is a collaborative project with many contributors.
-Type 'contributors()' for more information and
-'citation()' on how to cite R or R packages in publications.
-
-Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for an HTML browser interface to help.
-Type 'q()' to quit R.
-
-[Previously saved workspace restored]
-
-> makecache<- function(x=matrix){
-+       inv<- NULL
-+       set<- function(y){
+makecache<- function(x =matrix){    ##makecache is a fuction which creates a special martix 
++       inv <- NULL                 ##which which can Cache its inverse for the input 
++       set <- function(y){
 + 
-+              x<<- y
-+              inv<<- NULL
++              x <<- y
++              inv <<- NULL
 +          }
-+ 
-+          get<- fucntion() x
-Error: unexpected symbol in:
-"
-         get<- fucntion() x"
->          setmean<- function(inv)
-+          inv<<- inverse
-> 
->          getmean<- function() inv
+            get <- fucntion() x
+>          setinv <- function(inv)
++          inv <<- inverse
+>          getmean <- function() inv
 >          list(set=set, get=get, setinv=setinv, getinv=getinv)
-Error: object 'set' not found
 > }
-Error: unexpected '}' in "}"
-> cachesolve<- function(x, ...){
-+ 
-+           inv<- x$getinv()
-+           if(!is.null(inv)) {
-+ 
+> cachesolve<- function(x, ...){      ## cachesolve is a function that computes the 
+
++           inv <- x$getinv()          ##inverse of the special Matrix returned by the
++           if(!is.null(inv)) {       ##makeCachematrix above. if the inverse has been 
++                                     ##calculated and the matrix is not changed, cachesolve retrives it 
 +                    message("getting cached data")
 +                    return(inv)
 + 
 +             }
-+            mat.data = x$get()
-+            inv = solve(mat.data,...)
++            data <- x$get()
++            inv <- solve(data,...)
 +            x$setinv(inv)
-+ 
++
 +            return(inv)
-+ 
+}
+
+## ---------------Checking the program------------------------
+## m <- matrix(rnorm(16),4,4)
+## m1 <- makeCacheMatrix(m)
+## cacheSolve(m1)
+
+## [,1]       [,2]       [,3]       [,4]
+## [1,] -0.1653269  0.2592203  0.6176218 -0.7520955
+## [2,]  0.2828334 -0.1853499  0.4511382  0.2094365
+## [3,]  0.1434840  1.0413868 -0.3550853 -0.3261154
+## [4,]  0.1793583 -0.4252171 -0.4371493 -0.1749830
